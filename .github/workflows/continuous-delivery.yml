@@ -56,7 +56,7 @@ jobs:
 
       - name: Store the new version in the environment
         run: |
-          echo "New version: ${{ steps.version_calculator.outputs.version }}"
+          echo "New TCG version: ${{ steps.version_calculator.outputs.version }}"
           echo "FULL_VERSION=${{ steps.version_calculator.outputs.version }}" >> $GITHUB_ENV
 
       - name: Path application version in the application
