@@ -1,5 +1,7 @@
 # Tabby Connection Gateway
 
+**Note: This is a fork of the original project available at [Eugeny/tabby-connection-gateway](https://github.com/Eugeny/tabby-connection-gateway)**
+
 This is the connection gateway service that Tabby Web uses.
 It's a Websocket &rarr; TCP gateway that allows Tabby to initiate arbitrary network connections from a browser.
 
@@ -10,28 +12,8 @@ Once started, you'll just need to enter your gateway URL and a secret token in t
 ## Getting started (Docker)
 
 ```bash
-docker pull ghcr.io/eugeny/tabby-connection-gateway:latest
-docker run -e TABBY_AUTH_TOKEN=secret123 -p 9000:9000 ghcr.io/eugeny/tabby-connection-gateway:master --token-auth --host 0.0.0.0
-```
-## Getting started (Docker-compose)
-
-```version: '3.3'
-services:
-    eugeny:
-        command: --token-auth --host 0.0.0.0
-        environment:
-            - TABBY_AUTH_TOKEN=XXX
-        ports:
-            - 9000:9000
-        image: 'ghcr.io/eugeny/tabby-connection-gateway:master'
-```
-
-If using ssl add ```--port 443``` to commnd line & change ports to ```-9000:443```       
-        
-## Getting started (native)
-
-```bash
-pip3 install tabby-connection-gateway
+docker pull docker.io/knaisoma/tabby-connection-gateway:latest
+docker run -e TABBY_AUTH_TOKEN=secret123 -p 9000:9000 docker.io/knaisoma/tabby-connection-gateway:latest --token-auth --host 0.0.0.0
 ```
 
 ## Usage
@@ -59,25 +41,6 @@ TABBY_AUTH_TOKEN="123..." tabby-connection-gateway --host 0.0.0.0 --port 1234 --
 ```
 
 Connection gateway URL for Tabby settings: `ws://<host>:1234`
-
-### Sample systemd unit
-
-```ini
-[Unit]
-Description=Tabby Gateway
-Requires=network-online.target
-After=network-online.target
-
-[Service]
-Restart=always
-ExecStart=/usr/local/bin/tabby-connection-gateway --host 0.0.0.0 --port 443 --certificate /etc/letsencrypt/live/my-host.com/fullchain.pem --private-key /etc/letsencrypt/live/my-host.com/privkey.pem --token-auth
-Environment=TABBY_AUTH_TOKEN=123...
-StandardOutput=syslog
-StandardError=syslog
-
-[Install]
-WantedBy=multi-user.target
-```
 
 ### All options
 
